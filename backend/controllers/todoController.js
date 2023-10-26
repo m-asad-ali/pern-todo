@@ -2,6 +2,17 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+// get all todos
+const getAllTodos = async (req, res) => {
+  try {
+    const todos = await prisma.todo.findMany();
+    res.json(todos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 // create new todo
 const createTodo = async (req, res) => {
   try {
@@ -71,4 +82,4 @@ const deleteTodo = async (req, res) => {
   }
 };
 
-export { createTodo, updateTodo, completeTodo, deleteTodo };
+export { getAllTodos, createTodo, updateTodo, completeTodo, deleteTodo };

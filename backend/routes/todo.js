@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  getAllTodos,
   createTodo,
   updateTodo,
   completeTodo,
@@ -8,6 +9,7 @@ import {
 
 const routerTodo = Router();
 
+routerTodo.get("/all", getAllTodos);
 routerTodo.post("/create", createTodo);
 routerTodo.put("/update/:id", updateTodo);
 routerTodo.put("/complete/:id", completeTodo);
