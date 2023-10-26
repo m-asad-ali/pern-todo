@@ -16,6 +16,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
 import routerTodo from "./routes/todo.js";
+import routerUser from "./routes/user.js";
 
 dotenv.config();
 const app = express();
@@ -28,6 +29,7 @@ app.use(cors());
 
 // API routes
 app.use(routerTodo);
+app.use(routerUser);
 
 // Root route
 app.get("/", (req, res) => {
