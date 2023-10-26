@@ -21,16 +21,15 @@ const getAllTodos = async (req, res) => {
 // create new todo
 const createTodo = async (req, res) => {
   try {
-    // const { title, description, dueDate } = req.body;
-    const { title, userId } = req.body;
-    const newTodo = await prisma.todo.create({ data: { title, userId } });
-    // const newTodo = await prisma.todo.create({
-    //   data: {
-    //     title,
-    //     description,
-    //     dueDate,
-    //   },
-    // });
+    const { title, description, dueDate, userId } = req.body;
+    const newTodo = await prisma.todo.create({
+      data: {
+        title,
+        description,
+        dueDate,
+        userId,
+      },
+    });
     res.status(201).json(newTodo);
   } catch (error) {
     console.error(error);
