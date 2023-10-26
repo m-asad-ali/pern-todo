@@ -50,12 +50,45 @@ const registerUser = async (req, res) => {
 };
 
 // User login
-const loginUser = async (req, res) => {};
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    // Check if the user with the given email already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!existingUser) return res.status(400).json({ error: "User Not Found" });
+
+    // Check password
+    const passwordMatch = await bcrypt.compare(password, existingUser.password);
+    if (!passwordMatch)
+      return res.status(400).json({ error: "Invalid Password" });
+
+    const tokenData = {
+      id: existingUser.id,
+      username: existingUser.username,
+      email: existingUser.email,
+    };
+
+    // Generate a JWT token for the user
+    const token = jwt.sign(tokenData, process.env.JWT_KEY, {
+      expiresIn: "1d",
+    });
+
+    // Respond with the token
+    res.status(201).json({
+      user: existingUser,
+      token: token,
+      message: "User Sign-in succesfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 // User logout (signout)
 const logoutUser = (req, res) => {};
 
-// User validation
-const validateUser = async (req, res) => {};
-
-export { registerUser, loginUser, logoutUser, validateUser };
+export { registerUser, loginUser, logoutUser };
