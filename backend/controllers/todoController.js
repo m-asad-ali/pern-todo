@@ -42,6 +42,25 @@ const updateTodo = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description, dueDate } = req.body;
+
+    // Find the TODO by ID
+    const todoToUpdate = await prisma.todo.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    // Check if the TODO exists
+    if (!todoToUpdate) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+
+    // Check if the authenticated user is the owner of the TODO
+    if (todoToUpdate.userId !== req.user.userId) {
+      return res
+        .status(403)
+        .json({ error: "You do not have permission to update this TODO" });
+    }
+
+    // Update the TODO
     const updatedTodo = await prisma.todo.update({
       where: { id: parseInt(id) },
       data: {
@@ -50,6 +69,7 @@ const updateTodo = async (req, res) => {
         dueDate,
       },
     });
+
     res.json(updatedTodo);
   } catch (error) {
     console.error(error);
