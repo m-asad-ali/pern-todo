@@ -1,1 +1,2 @@
-# pern-todo
+# Todo app
+using PERN STACK.
