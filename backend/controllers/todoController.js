@@ -115,6 +115,23 @@ const completeTodo = async (req, res) => {
 const deleteTodo = async (req, res) => {
   try {
     const { id } = req.params;
+    // Find the TODO by ID
+    const todoToDelete = await prisma.todo.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    // Check if the TODO exists
+    if (!todoToDelete) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+
+    // Check if the authenticated user is the owner of the TODO
+    if (todoToDelete.userId !== req.user.userId) {
+      return res
+        .status(403)
+        .json({ error: "You do not have permission to access this TODO" });
+    }
+
     await prisma.todo.delete({
       where: { id: parseInt(id) },
     });
