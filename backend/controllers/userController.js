@@ -65,14 +65,14 @@ const loginUser = async (req, res) => {
     if (!passwordMatch)
       return res.status(400).json({ error: "Invalid Password" });
 
-    const tokenData = {
-      id: existingUser.id,
-      username: existingUser.username,
-      email: existingUser.email,
-    };
+    // const tokenData = {
+    //   id: existingUser.id,
+    //   username: existingUser.username,
+    //   email: existingUser.email,
+    // };
 
     // Generate a JWT token for the user
-    const token = jwt.sign(tokenData, process.env.JWT_KEY, {
+    const token = jwt.sign({ userId: existingUser.id }, process.env.JWT_KEY, {
       expiresIn: "1d",
     });
 

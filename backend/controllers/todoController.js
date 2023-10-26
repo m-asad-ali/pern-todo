@@ -5,7 +5,12 @@ const prisma = new PrismaClient();
 // get all todos
 const getAllTodos = async (req, res) => {
   try {
-    const todos = await prisma.todo.findMany();
+    const userId = req.user.userId;
+    const todos = await prisma.todo.findMany({
+      where: {
+        userId: userId,
+      },
+    });
     res.json(todos);
   } catch (error) {
     console.error(error);
@@ -16,18 +21,20 @@ const getAllTodos = async (req, res) => {
 // create new todo
 const createTodo = async (req, res) => {
   try {
-    const { title, description, dueDate } = req.body;
-    const newTodo = await prisma.todo.create({
-      data: {
-        title,
-        description,
-        dueDate,
-      },
-    });
+    // const { title, description, dueDate } = req.body;
+    const { title, userId } = req.body;
+    const newTodo = await prisma.todo.create({ data: { title, userId } });
+    // const newTodo = await prisma.todo.create({
+    //   data: {
+    //     title,
+    //     description,
+    //     dueDate,
+    //   },
+    // });
     res.status(201).json(newTodo);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Internal server error!" });
   }
 };
 

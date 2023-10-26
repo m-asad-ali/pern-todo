@@ -16,7 +16,9 @@ model User {
   username String @unique
   email    String @unique
   password String
-  todos    Todo[] // One-to-Many relationship with Todo
+  //: todos    Todo[] // One-to-Many relationship with Todo
+  Todo     Todo?  @relation(fields: [todoId], references: [id])
+  todoId   Int?
 }
 
 // Define the Todo model for tasks
@@ -29,5 +31,6 @@ model Todo {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   userId      Int // Foreign key for User
-  user        User      @relation(fields: [userId], references: [id])
+  // user        User      @relation(fields: [userId], references: [id])
+  user        User[]
 }
