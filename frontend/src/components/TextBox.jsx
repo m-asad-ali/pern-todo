@@ -1,31 +1,66 @@
-import { Container, TextField, Button } from "@mui/material";
+import PropTypes from "prop-types";
+import { Container, TextField, Button, Box } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 
-function TextBox() {
-  const { control, handleSubmit, reset } = useForm();
+function TextBox({ onAddTask }) {
+  const {
+    handleSubmit,
+    control,
+    formState: { isValid },
+    reset,
+  } = useForm({ mode: "onChange" });
 
-  const handleAddTask = (data) => {
-    // onAddTask(data.task);
+  const onSubmit = (data) => {
+    onAddTask(data.task);
     reset();
   };
 
   return (
-    <Container sx={{ padding: "16px" }}>
-      <form onSubmit={handleSubmit(handleAddTask)}>
-        <Controller
-          name="task"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <TextField label="Add your task" variant="outlined" {...field} />
-          )}
-        />
-        <Button type="submit" variant="contained" color="primary">
-          Add
-        </Button>
+    <Container
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "10vh",
+        marginTop: "30px",
+        backgroundColor: "pink",
+      }}
+    >
+      <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+        <Box display="flex" alignItems="center">
+          <Controller
+            name="task"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                fullWidth
+                label="Add your task"
+                {...field}
+                variant="outlined"
+              />
+            )}
+          />
+          <Button
+            type="submit"
+            disabled={!isValid}
+            style={{
+              height: "56px",
+              marginLeft: "8px",
+            }}
+            variant="contained"
+            color="primary"
+          >
+            Add
+          </Button>
+        </Box>
       </form>
     </Container>
   );
 }
+
+TextBox.propTypes = {
+  onAddTask: PropTypes.func.isRequired,
+};
 
 export default TextBox;

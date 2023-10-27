@@ -1,6 +1,6 @@
 import { AppBar, Toolbar, Typography, Avatar } from "@mui/material";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import { PropTypes } from "@mui/material";
+import PropTypes from "prop-types";
 
 const Navbar = ({ username }) => {
   return (
