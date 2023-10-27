@@ -1,6 +1,10 @@
+/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import { Container, TextField, Button, Box } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
+
+import { addTodo } from "../api/HandleTodoAPI";
+import { mutate } from "swr";
 
 function TextBox({ onAddTask }) {
   const {
@@ -10,11 +14,20 @@ function TextBox({ onAddTask }) {
     reset,
   } = useForm({ mode: "onChange" });
 
-  const onSubmit = (data) => {
-    console.log("Form data", data);
+  async function onSubmit(data) {
+    // console.log("Form data", data);
     onAddTask(data.title);
+    const apiObj = {
+      title: data.title,
+      userId: 1,
+      token:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5ODMzNTkzOCwiZXhwIjoxNjk4NDIyMzM4fQ.KNuDN5KvhkZjwu_d9axNSL6MyDSukTScvhTcQZJJAOU",
+    };
+
+    await addTodo(apiObj);
+    mutate(apiObj.token);
     reset();
-  };
+  }
 
   return (
     <Container

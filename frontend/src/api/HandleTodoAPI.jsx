@@ -20,3 +20,24 @@ export async function fetchAllTodos(token) {
     );
   }
 }
+
+export async function addTodo(obj) {
+  try {
+    const response = await axios
+      .post(
+        `${baseUrl}/create`,
+        { title: obj.title, userId: obj.userId },
+        {
+          headers: { Authorization: `Bearer ${obj.token}` },
+        }
+      )
+      .then((res) => res.data);
+
+    return response;
+  } catch (error) {
+    console.error("Error occurred while adding data.", error);
+    throw new Error(
+      error.response.data.message ? error.response.data.message : error.message
+    );
+  }
+}

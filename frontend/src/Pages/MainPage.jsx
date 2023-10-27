@@ -7,6 +7,7 @@ import NavBar from "../components/NavBar";
 import TextBox from "../components/TextBox";
 import TodoList from "../components/TodoList";
 import { fetchAllTodos } from "../api/HandleTodoAPI";
+
 const MainPage = () => {
   const [taskData, setTaskData] = useState({ title: "" });
   const [todos, setTodos] = useState([]);
