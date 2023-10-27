@@ -7,7 +7,7 @@ import TodoItem from "./TodoItem";
 const TodoList = ({ todo }) => {
   return (
     <div>
-      <Container sx={{ marginTop: "30px", backgroundColor: "Grey" }}>
+      <Container sx={{ marginTop: "30px" }}>
         <Typography variant="h5">Todo List</Typography>
         <List style={{ listStyleType: "none" }}>
           {todo.map((todo) => (

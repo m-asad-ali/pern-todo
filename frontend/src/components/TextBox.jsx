@@ -24,7 +24,6 @@ function TextBox({ onAddTask }) {
         alignItems: "center",
         height: "10vh",
         marginTop: "10%",
-        backgroundColor: "pink",
       }}
     >
       <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
