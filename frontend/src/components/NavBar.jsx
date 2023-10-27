@@ -4,7 +4,11 @@ import PropTypes from "prop-types";
 
 const Navbar = ({ username }) => {
   return (
-    <AppBar position="sticky" color="default" sx={{ background: "#e0e0e0" }}>
+    <AppBar
+      position="sticky"
+      color="default"
+      sx={{ backgroundColor: "white", boxShadow: "none" }}
+    >
       <Toolbar>
         <TaskAltIcon />
 

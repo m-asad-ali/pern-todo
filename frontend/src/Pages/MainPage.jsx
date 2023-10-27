@@ -15,8 +15,8 @@ const MainPage = () => {
 
   return (
     <div>
-      <NavBar username={"Asad Ali"} />
       <Container maxWidth="md">
+        <NavBar username={"Asad Ali"} />
         <TextBox onAddTask={setTaskData} />
         {console.log("Actual Task", taskData)}
         <TodoList todo={todos} />
