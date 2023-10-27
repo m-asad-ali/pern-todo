@@ -42,6 +42,27 @@ export async function addTodo(obj) {
   }
 }
 
+export async function completeTodo(obj) {
+  try {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5ODMzNTkzOCwiZXhwIjoxNjk4NDIyMzM4fQ.KNuDN5KvhkZjwu_d9axNSL6MyDSukTScvhTcQZJJAOU";
+    const response = await axios
+      .put(
+        `${baseUrl}/complete/${obj.id}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => res.data);
+
+    return response;
+  } catch (error) {
+    console.error("Error occurred while adding data.", error);
+    throw new Error(
+      error.response.data.message ? error.response.data.message : error.message
+    );
+  }
+}
+
 export async function deleteTodo(obj) {
   try {
     const response = await axios
@@ -52,7 +73,7 @@ export async function deleteTodo(obj) {
 
     return response;
   } catch (error) {
-    console.error("Error occurred while adding data.", error);
+    console.error("Error occurred while deleting task.", error);
     throw new Error(
       error.response.data.message ? error.response.data.message : error.message
     );
