@@ -5,12 +5,13 @@ import PropTypes from "prop-types";
 import TodoItem from "./TodoItem";
 
 const TodoList = ({ todo }) => {
+  const sortedTodo = todo.slice().sort((a, b) => a.id - b.id);
   return (
     <div>
       <Container sx={{ marginTop: "30px" }}>
         <Typography variant="h5">Todo List</Typography>
         <List style={{ listStyleType: "none" }}>
-          {todo.map((todo) => (
+          {sortedTodo.map((todo) => (
             <TodoItem key={todo.id} todo={todo} />
           ))}
         </List>
