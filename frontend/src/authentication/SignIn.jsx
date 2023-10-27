@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
 import { useForm, Controller } from "react-hook-form";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { signInUser } from "../api/HandleUserAPI";
 
 function isValidEmail(email) {
   // Use a regular expression to validate email format
@@ -22,8 +23,9 @@ function isValidEmail(email) {
 function SignIn() {
   const { handleSubmit, control, formState } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const { userData } = await signInUser(data);
+    if (userData) console.log("USER Data: ", userData);
   };
 
   return (
