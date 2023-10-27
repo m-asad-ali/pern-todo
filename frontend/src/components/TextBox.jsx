@@ -10,7 +10,7 @@ function TextBox() {
   };
 
   return (
-    <Container>
+    <Container sx={{ padding: "16px" }}>
       <form onSubmit={handleSubmit(handleAddTask)}>
         <Controller
           name="task"
