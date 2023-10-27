@@ -1,14 +1,18 @@
+import { useState } from "react";
+import { Container } from "@mui/material";
+
 import NavBar from "../components/NavBar";
 import TextBox from "../components/TextBox";
-import { Container } from "@mui/material";
 const MainPage = () => {
+  const [taskData, setTaskData] = useState({ title: "" });
+
   return (
     <div>
       <NavBar username={"Asad Ali"} />
       <Container maxWidth="md">
-        <TextBox onAddTask={() => console.log("Hello")} />
+        <TextBox onAddTask={setTaskData} />
+        {console.log("Actual Task", taskData)}
       </Container>
-      {/* <TextBox /> */}
     </div>
   );
 };

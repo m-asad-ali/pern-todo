@@ -11,7 +11,8 @@ function TextBox({ onAddTask }) {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = (data) => {
-    onAddTask(data.task);
+    console.log("Form data", data);
+    onAddTask(data.title);
     reset();
   };
 
@@ -22,14 +23,14 @@ function TextBox({ onAddTask }) {
         justifyContent: "center",
         alignItems: "center",
         height: "10vh",
-        marginTop: "30px",
+        marginTop: "10%",
         backgroundColor: "pink",
       }}
     >
       <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
         <Box display="flex" alignItems="center">
           <Controller
-            name="task"
+            name="title"
             control={control}
             defaultValue=""
             render={({ field }) => (
