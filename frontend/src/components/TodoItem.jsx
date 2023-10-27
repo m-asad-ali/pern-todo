@@ -43,7 +43,7 @@ function TodoItem({ todo }) {
         <Checkbox checked={todo?.complete} />
         <ListItemText
           primary={todo.title}
-          secondary={todo.description}
+          // secondary={todo.description}
           button
           onClick={handleOpen}
         />
