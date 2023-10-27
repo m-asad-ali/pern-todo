@@ -42,7 +42,7 @@ function TodoItem({ todo }) {
       <ListItem sx={{ pl: 0 }}>
         <Checkbox checked={todo?.complete} />
         <ListItemText
-          primary={todo.title}
+          primary={todo?.title}
           // secondary={todo.description}
           button
           onClick={handleOpen}
