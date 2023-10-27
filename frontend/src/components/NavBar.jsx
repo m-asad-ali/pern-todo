@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import { AppBar, Toolbar, Typography, Avatar } from "@mui/material";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import PropTypes from "prop-types";
