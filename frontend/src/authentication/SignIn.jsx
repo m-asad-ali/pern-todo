@@ -13,6 +13,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { signInUser } from "../api/HandleUserAPI";
+import { useAuth } from "./AuthContext";
 
 function isValidEmail(email) {
   // Use a regular expression to validate email format
@@ -21,11 +22,20 @@ function isValidEmail(email) {
 }
 
 function SignIn() {
+  const { login } = useAuth();
   const { handleSubmit, control, formState } = useForm();
 
   const onSubmit = async (data) => {
-    const { userData } = await signInUser(data);
-    if (userData) console.log("USER Data: ", userData);
+    const response = await signInUser(data);
+
+    const loggedInUser = {
+      id: response.user.id,
+      username: response.user.username,
+      email: response.user.email,
+      password: response.user.password,
+      token: response.token,
+    };
+    login(loggedInUser);
   };
 
   return (
