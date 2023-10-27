@@ -101,7 +101,7 @@ const completeTodo = async (req, res) => {
     const completedTodo = await prisma.todo.update({
       where: { id: parseInt(id) },
       data: {
-        completed: true,
+        completed: !todoToComplete.completed,
       },
     });
     res.json(completedTodo);
