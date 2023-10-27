@@ -41,3 +41,20 @@ export async function addTodo(obj) {
     );
   }
 }
+
+export async function deleteTodo(obj) {
+  try {
+    const response = await axios
+      .delete(`${baseUrl}/delete/${obj.id}`, {
+        headers: { Authorization: `Bearer ${obj.token}` },
+      })
+      .then((res) => res.data);
+
+    return response;
+  } catch (error) {
+    console.error("Error occurred while adding data.", error);
+    throw new Error(
+      error.response.data.message ? error.response.data.message : error.message
+    );
+  }
+}
