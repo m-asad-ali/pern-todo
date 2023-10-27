@@ -44,13 +44,11 @@ export async function addTodo(obj) {
 
 export async function completeTodo(obj) {
   try {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5ODMzNTkzOCwiZXhwIjoxNjk4NDIyMzM4fQ.KNuDN5KvhkZjwu_d9axNSL6MyDSukTScvhTcQZJJAOU";
     const response = await axios
       .put(
         `${baseUrl}/complete/${obj.id}`,
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${obj.token}` } }
       )
       .then((res) => res.data);
 

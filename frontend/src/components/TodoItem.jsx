@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
+import { mutate } from "swr";
 import {
   Checkbox,
   ListItem,
@@ -8,8 +9,7 @@ import {
   IconButton,
 } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import CheckIcon from "@mui/icons-material/Check";
-import { mutate } from "swr";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 import { deleteTodo } from "../api/HandleTodoAPI";
 import { completeTodo } from "../api/HandleTodoAPI";
@@ -39,14 +39,8 @@ function TodoItem({ todo }) {
         />
         <ListItemText primary={todo?.title} />
         <ListItemSecondaryAction>
-          {/* <IconButton
-            edge="end"
-            aria-label="delete"
-            onClick={() => {
-              handleCheckboxChange(todo?.id);
-            }}
-          >
-            <CheckIcon />
+          {/* <IconButton edge="end" aria-label="delete">
+            <EditOutlinedIcon />
           </IconButton> */}
 
           <IconButton
