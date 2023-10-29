@@ -14,8 +14,7 @@ import Typography from "@mui/material/Typography";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { signInUser } from "../api/HandleUserAPI";
 
-import { useDispatch, useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
 import { login } from "../redux/slices/authSlice";
 
 function isValidEmail(email) {
@@ -39,7 +38,6 @@ function SignIn() {
       isAuthenticated: true,
       token: response.token,
     };
-    console.log("My User: ", user);
     dispatch(login(user));
   };
 

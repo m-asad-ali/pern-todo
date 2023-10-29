@@ -10,17 +10,24 @@ import {
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 import MainPage from "./Pages/MainPage.jsx";
 import SignIn from "./authentication/SignIn.jsx";
 
 function App() {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/" element={<MainPage />} />
+          <Route
+            path="/"
+            element={isAuthenticated ? <MainPage /> : <Navigate to="/signin" />}
+          />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
