@@ -14,6 +14,10 @@ import Typography from "@mui/material/Typography";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { signInUser } from "../api/HandleUserAPI";
 
+import { useDispatch, useSelector } from "react-redux";
+
+import { login } from "../redux/slices/authSlice";
+
 function isValidEmail(email) {
   // Use a regular expression to validate email format
   const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -22,18 +26,21 @@ function isValidEmail(email) {
 
 function SignIn() {
   const { handleSubmit, control, formState } = useForm();
+  const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
     const response = await signInUser(data);
 
-    const loggedInUser = {
+    const user = {
       id: response.user.id,
       username: response.user.username,
       email: response.user.email,
       password: response.user.password,
-      token: response.token,
       isAuthenticated: true,
+      token: response.token,
     };
+    console.log("My User: ", user);
+    dispatch(login(user));
   };
 
   return (
