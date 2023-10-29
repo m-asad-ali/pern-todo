@@ -5,8 +5,11 @@ import { useForm, Controller } from "react-hook-form";
 
 import { addTodo } from "../api/HandleTodoAPI";
 import { mutate } from "swr";
+import { useSelector } from "react-redux";
 
 function TextBox({ onAddTask }) {
+  const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
   const {
     handleSubmit,
     control,
@@ -19,9 +22,8 @@ function TextBox({ onAddTask }) {
     onAddTask(data.title);
     const apiObj = {
       title: data.title,
-      userId: 1,
-      token:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5ODMzNTkzOCwiZXhwIjoxNjk4NDIyMzM4fQ.KNuDN5KvhkZjwu_d9axNSL6MyDSukTScvhTcQZJJAOU",
+      userId: user.id,
+      token: token,
     };
 
     await addTodo(apiObj);

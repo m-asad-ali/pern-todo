@@ -36,9 +36,9 @@ function SignIn() {
       email: response.user.email,
       password: response.user.password,
       isAuthenticated: true,
-      token: response.token,
     };
-    dispatch(login(user));
+    const token = response.token;
+    dispatch(login({ user, token }));
   };
 
   return (

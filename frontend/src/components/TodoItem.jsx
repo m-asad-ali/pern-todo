@@ -10,14 +10,14 @@ import {
 } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-
+import { useSelector } from "react-redux";
 import { deleteTodo } from "../api/HandleTodoAPI";
 import { completeTodo } from "../api/HandleTodoAPI";
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5ODMzNTkzOCwiZXhwIjoxNjk4NDIyMzM4fQ.KNuDN5KvhkZjwu_d9axNSL6MyDSukTScvhTcQZJJAOU";
-
 function TodoItem({ todo }) {
+  // const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
+
   async function handleDeleteTodo(id) {
     await deleteTodo({ id, token });
     mutate(token);

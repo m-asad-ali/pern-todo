@@ -7,12 +7,13 @@ import NavBar from "../components/NavBar";
 import TextBox from "../components/TextBox";
 import TodoList from "../components/TodoList";
 import { fetchAllTodos } from "../api/HandleTodoAPI";
+import { useSelector } from "react-redux";
 
 const MainPage = () => {
   const [taskData, setTaskData] = useState({ title: "" });
   const [todos, setTodos] = useState([]);
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5ODMzNTkzOCwiZXhwIjoxNjk4NDIyMzM4fQ.KNuDN5KvhkZjwu_d9axNSL6MyDSukTScvhTcQZJJAOU";
+  const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
 
   // calling apis
   const { data, error } = useSWR(token, fetchAllTodos, {
@@ -24,7 +25,9 @@ const MainPage = () => {
   return (
     <div>
       <Container maxWidth="md">
-        <NavBar username={"Asad Ali"} />
+        <NavBar
+          username={user.username[0].toUpperCase() + user.username.slice(1)}
+        />
         <TextBox onAddTask={setTaskData} />
         <TodoList todo={todos} />
       </Container>
