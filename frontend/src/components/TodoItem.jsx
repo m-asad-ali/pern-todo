@@ -42,7 +42,7 @@ function TodoItem({ todo }) {
             handleCheckboxChange(todo?.id);
           }}
         />
-        <ListItemText primary={todo?.title} secondary={formattedDate} />
+        <ListItemText primary={todo?.title} />
 
         <ListItemSecondaryAction>
           <IconButton

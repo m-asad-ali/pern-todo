@@ -1,13 +1,22 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { Container, TextField, Button, Box } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
-
+import DatePicker from "react-datepicker";
 import { addTodo } from "../api/HandleTodoAPI";
 import { mutate } from "swr";
 import { useSelector } from "react-redux";
+import { styled } from "@mui/material/styles";
 
-function TextBox({ onAddTask }) {
+import "react-datepicker/dist/react-datepicker.css";
+const CustomDatePicker = styled(DatePicker)({
+  "& .react-datepicker": {
+    height: "56px",
+  },
+});
+function TextBox() {
+  const [dueDate, setDueDate] = useState(null);
   const user = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
   const {
@@ -18,11 +27,11 @@ function TextBox({ onAddTask }) {
   } = useForm({ mode: "onChange" });
 
   async function onSubmit(data) {
-    // console.log("Form data", data);
-    onAddTask(data.title);
+    console.log(data.dueDate);
     const apiObj = {
       title: data.title,
       userId: user.id,
+      dueDate: data.dueDate,
       token: token,
     };
 
@@ -56,6 +65,17 @@ function TextBox({ onAddTask }) {
               />
             )}
           />
+          {/* <Controller
+            control={control}
+            name="dueDate"
+            render={({ field }) => (
+              <DatePicker
+                placeholderText="Select date"
+                onChange={(date) => field.onChange(date)}
+                selected={field.value}
+              />
+            )}
+          /> */}
           <Button
             type="submit"
             disabled={!isValid}
@@ -73,9 +93,5 @@ function TextBox({ onAddTask }) {
     </Container>
   );
 }
-
-TextBox.propTypes = {
-  onAddTask: PropTypes.func.isRequired,
-};
 
 export default TextBox;

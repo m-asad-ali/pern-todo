@@ -10,7 +10,6 @@ import { fetchAllTodos } from "../api/HandleTodoAPI";
 import { useSelector } from "react-redux";
 
 const MainPage = () => {
-  const [taskData, setTaskData] = useState({ title: "" });
   const [todos, setTodos] = useState([]);
   const user = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
@@ -28,7 +27,7 @@ const MainPage = () => {
         <NavBar
           username={user.username[0].toUpperCase() + user.username.slice(1)}
         />
-        <TextBox onAddTask={setTaskData} />
+        <TextBox />
         <TodoList todo={todos} />
       </Container>
     </div>
