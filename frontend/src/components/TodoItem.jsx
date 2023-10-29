@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
+import React from "react";
 import { mutate } from "swr";
 import {
   Checkbox,
@@ -7,6 +8,8 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   IconButton,
+  Typography,
+  Divider,
 } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
@@ -15,8 +18,10 @@ import { deleteTodo } from "../api/HandleTodoAPI";
 import { completeTodo } from "../api/HandleTodoAPI";
 
 function TodoItem({ todo }) {
-  // const user = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
+  let formattedDate;
+  if (todo?.dueDate !== null)
+    formattedDate = new Date(todo?.dueDate).toLocaleDateString();
 
   async function handleDeleteTodo(id) {
     await deleteTodo({ id, token });
@@ -37,12 +42,9 @@ function TodoItem({ todo }) {
             handleCheckboxChange(todo?.id);
           }}
         />
-        <ListItemText primary={todo?.title} />
-        <ListItemSecondaryAction>
-          {/* <IconButton edge="end" aria-label="delete">
-            <EditOutlinedIcon />
-          </IconButton> */}
+        <ListItemText primary={todo?.title} secondary={formattedDate} />
 
+        <ListItemSecondaryAction>
           <IconButton
             edge="end"
             aria-label="delete"
@@ -54,6 +56,7 @@ function TodoItem({ todo }) {
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
+      <Divider />
     </div>
   );
 }
