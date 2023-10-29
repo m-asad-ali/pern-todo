@@ -23,10 +23,13 @@ const registerUser = async (req, res) => {
     const saltRounds = await bcrypt.genSalt(12);
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
+    //geting username on own
+    const myUserName = email.split("@")[0];
+
     // Create the new user in the database
     const newUser = await prisma.user.create({
       data: {
-        username,
+        username: myUserName,
         email,
         password: hashedPassword,
       },

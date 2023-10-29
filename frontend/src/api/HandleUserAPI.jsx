@@ -30,3 +30,33 @@ export async function signInUser(obj) {
     );
   }
 }
+
+export async function registerUser(obj) {
+  try {
+    const response = await axios
+      .post(
+        `${baseUrl}/register`,
+        { email: obj.email, password: obj.password },
+        {
+          // headers: { Authorization: `Bearer ${obj.token}` },
+        }
+      )
+      .then((res) => res.data);
+
+    toast.success(`${response.message}`, {
+      position: toast.POSITION.TOP_CENTER,
+    });
+
+    return response;
+  } catch (error) {
+    // toast.error(`Can not Register`, {
+    //   position: toast.POSITION.TOP_CENTER,
+    // });
+    toast.error(`${error}`, {
+      position: toast.POSITION.TOP_CENTER,
+    });
+    throw new Error(
+      error.response.data.message ? error.response.data.message : error.message
+    );
+  }
+}

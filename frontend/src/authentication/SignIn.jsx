@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useForm, Controller } from "react-hook-form";
 import Avatar from "@mui/material/Avatar";
@@ -13,8 +14,9 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { signInUser } from "../api/HandleUserAPI";
+import { registerUser } from "../api/HandleUserAPI";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/slices/authSlice";
 
 function isValidEmail(email) {
@@ -23,22 +25,35 @@ function isValidEmail(email) {
   return emailPattern.test(email);
 }
 
-function SignIn() {
+function SignIn({ type }) {
   const { handleSubmit, control, formState } = useForm();
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
-    const response = await signInUser(data);
-
-    const user = {
-      id: response.user.id,
-      username: response.user.username,
-      email: response.user.email,
-      password: response.user.password,
-      isAuthenticated: true,
-    };
-    const token = response.token;
-    dispatch(login({ user, token }));
+    if (type === "signin") {
+      const response = await signInUser(data);
+      const user = {
+        id: response.user.id,
+        username: response.user.username,
+        email: response.user.email,
+        password: response.user.password,
+        isAuthenticated: true,
+      };
+      const token = response.token;
+      dispatch(login({ user, token }));
+    } else {
+      const response = await registerUser(data);
+      const user = {
+        id: response.user.id,
+        username: response.user.username,
+        email: response.user.email,
+        password: response.user.password,
+        isAuthenticated: true,
+      };
+      const token = response.token;
+      dispatch(login({ user, token }));
+    }
   };
 
   return (
@@ -74,7 +89,7 @@ function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            {type === "signin" ? "Sign In" : "Sign Up"}
           </Typography>
           <Box
             component="form"
@@ -124,30 +139,57 @@ function SignIn() {
                 />
               )}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
+            {type === "signin" ? (
+              <>
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button>
+              </>
+            ) : (
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
+            )}
+
+            {type === "signin" ? (
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="/register" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+            ) : (
+              <>
+                <Grid container>
+                  <Grid item xs></Grid>
+                  <Grid item>
+                    <Link href="/signin" variant="body2">
+                      {"Already have an account? Sign In"}
+                    </Link>
+                  </Grid>
+                </Grid>
+              </>
+            )}
           </Box>
         </Box>
       </Grid>

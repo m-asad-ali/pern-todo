@@ -22,7 +22,8 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signin" element={<SignIn type="signin" />} />
+          <Route path="/register" element={<SignIn type="register" />} />
           <Route
             path="/"
             element={isAuthenticated ? <MainPage /> : <Navigate to="/signin" />}
