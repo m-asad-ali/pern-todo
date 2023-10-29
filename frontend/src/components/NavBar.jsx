@@ -1,10 +1,13 @@
 /* eslint-disable no-unused-vars */
 
-import { AppBar, Toolbar, Typography, Avatar } from "@mui/material";
+import { AppBar, Toolbar, Typography, Avatar, Button } from "@mui/material";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/slices/authSlice";
 
 const Navbar = ({ username }) => {
+  const dispatch = useDispatch();
   return (
     <AppBar
       position="sticky"
@@ -18,11 +21,22 @@ const Navbar = ({ username }) => {
           Todo List
         </Typography>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Typography variant="body1" style={{ marginRight: "16px" }}>
+          {/* <Avatar alt={username} src="/path-to-avatar-image.jpg" /> */}
+          <Typography
+            variant="body1"
+            style={{ marginLeft: "16px", marginRight: "16px" }}
+          >
             Hello, {username}
           </Typography>
-          <Avatar alt={username} src="/path-to-avatar-image.jpg" />
         </div>
+        <Button
+          color="inherit"
+          onClick={() => {
+            dispatch(logout());
+          }}
+        >
+          LogOut
+        </Button>
       </Toolbar>
     </AppBar>
   );
